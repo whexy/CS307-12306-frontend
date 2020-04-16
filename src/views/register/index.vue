@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form
       ref="loginForm"
-      :model="loginForm"
+      :model="RegisterForm"
       :rules="loginRules"
       class="login-form"
       auto-complete="on"
@@ -11,7 +11,7 @@
 
       <div class="title-container">
         <h2 class="bigtitle">12307火车订票系统</h2>
-        <h3 class="title">A Project Imitating 12306 in CS307</h3>
+        <h3 class="title">用户注册</h3>
       </div>
 
       <el-form-item prop="username">
@@ -20,12 +20,12 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="RegisterForm.username"
           placeholder="Username"
           name="username"
           type="text"
           tabindex="1"
-          auto-complete="on"
+          auto-complete="off"
         />
       </el-form-item>
 
@@ -36,39 +36,70 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="RegisterForm.password"
           :type="passwordType"
           placeholder="Password"
           name="password"
           tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          auto-complete="off"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-row
-        type="flex"
-        justify="center"
-        align="middle"
-      >
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width:40%;margin-bottom:30px;"
-          @click.native.prevent="handleLogin"
-        >Login
-        </el-button>
-        <el-button
-          :loading="loading"
-          type="warning"
-          style="width:40%;margin-bottom:30px;"
-          @click.native.prevent="handleRegister"
-        >Register
-        </el-button>
-      </el-row>
+      <el-form-item prop="phone_number">
+        <span class="svg-container">
+          <svg-icon icon-class="phone" />
+        </span>
+        <el-input
+          ref="phone_number"
+          v-model="RegisterForm.phone_number"
+          placeholder="Phone Number"
+          name="phone_number"
+          type="text"
+          tabindex="1"
+          auto-complete="off"
+        />
+      </el-form-item>
+
+      <el-form-item prop="email">
+        <span class="svg-container">
+          <svg-icon icon-class="email" />
+        </span>
+        <el-input
+          ref="email"
+          v-model="RegisterForm.email"
+          placeholder="E-Mail Address"
+          name="email"
+          type="text"
+          tabindex="1"
+          auto-complete="off"
+        />
+      </el-form-item>
+
+      <el-form-item prop="real_name">
+        <span class="svg-container">
+          <svg-icon icon-class="real_name" />
+        </span>
+        <el-input
+          ref="real_name"
+          v-model="RegisterForm.real_name"
+          placeholder="Real Name"
+          name="real_name"
+          type="text"
+          tabindex="1"
+          auto-complete="off"
+        />
+      </el-form-item>
+
+      <el-button
+        :loading="loading"
+        type="warning"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleRegister"
+      >Register
+      </el-button>
 
       <div class="tips">
         <span>南方科技大学数据库原理课程项目</span>
@@ -80,29 +111,35 @@
 </template>
 
 <script>
+import { Register } from '@/utils/register'
 import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
+      validUsername(value).then(value => {
+        if (value) {
+          callback()
+        } else {
+          callback(new Error('用户名已存在'))
+        }
+      })
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码至少为6位'))
       } else {
         callback()
       }
     }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
+      RegisterForm: {
+        username: '',
+        password: '',
+        phone_number: '',
+        email: '',
+        real_name: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -132,27 +169,15 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     handleRegister() {
-      this.$router.push({ path: '/register' })
+      // Whexy： 所有页面的js逻辑不应复杂于页面元素加载和变动。所有复杂于元素加载的逻辑都应在其他地方完成。
+      Register(this.RegisterForm).then(() => {
+        this.$router.push({ path: this.redirect || '/login' })
+      })
     }
   }
 }
+
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '12307 火车订票系统',
 
   /**
    * @type {boolean} true | false

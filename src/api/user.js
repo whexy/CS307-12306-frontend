@@ -22,3 +22,19 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function register(data) {
+  return request({
+    url: '/signup',
+    method: 'post',
+    data
+  })
+}
+
+export function username_available(username) {
+  return request({
+    url: '/user/check',
+    method: 'get',
+    params: { username }
+  })
+}
