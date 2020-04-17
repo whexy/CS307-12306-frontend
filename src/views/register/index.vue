@@ -124,11 +124,14 @@ export default {
         } else {
           callback(new Error('用户名已存在'))
         }
+      }).catch(error => {
+        callback(new Error(error))
       })
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码至少为6位'))
+      const regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}')
+      if (!regex.test(value)) {
+        callback(new Error('密码中必须包含字母、数字，至少8个字符，最多30个字符。'))
       } else {
         callback()
       }

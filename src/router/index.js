@@ -57,7 +57,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '火车票查询', icon: 'dashboard' }
     }]
   },
 
@@ -157,10 +157,15 @@ export const constantRoutes = [
   {
     path: 'external-link',
     component: Layout,
+    meta: { title: '项目GitHub地址', icon: 'link' },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'https://github.com/whexy/CS307-12306-frontend',
+        meta: { title: '项目前端GitHub' }
+      },
+      {
+        path: 'https://github.com/whexy/CS307-12306',
+        meta: { title: '项目后端GitHub' }
       }
     ]
   },

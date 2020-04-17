@@ -1,5 +1,5 @@
 /**
- * Created by PanJiaChen on 16/11/18.
+ * Created by Whexy on 17/4/2020
  */
 
 import { username_available } from '@/api/user'
@@ -15,7 +15,8 @@ export function isExternal(path) {
 export function validUsername(username) {
   return new Promise((resolve, reject) => {
     username_available(username).then(response => {
-      resolve(response.data.result)
+      const { result } = response
+      resolve(result)
     }).catch(error => {
       reject(error)
     })
