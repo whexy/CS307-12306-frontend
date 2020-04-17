@@ -58,7 +58,7 @@
           placeholder="Phone Number"
           name="phone_number"
           type="text"
-          tabindex="1"
+          tabindex="3"
           auto-complete="off"
         />
       </el-form-item>
@@ -73,7 +73,7 @@
           placeholder="E-Mail Address"
           name="email"
           type="text"
-          tabindex="1"
+          tabindex="4"
           auto-complete="off"
         />
       </el-form-item>
@@ -88,7 +88,7 @@
           placeholder="Real Name"
           name="real_name"
           type="text"
-          tabindex="1"
+          tabindex="5"
           auto-complete="off"
         />
       </el-form-item>
@@ -272,7 +272,7 @@ export default {
       position: relative;
 
       .title {
-        font-size: 26px;
+        font-size: 20px;
         color: $dark_gray;
         margin: 0px auto 40px auto;
         text-align: center;
@@ -280,7 +280,7 @@ export default {
       }
 
       .bigtitle {
-        font-size: 42px;
+        font-size: 35px;
         color: $light_gray;
         margin: 0px auto 40px auto;
         text-align: center;

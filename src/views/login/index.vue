@@ -247,7 +247,7 @@ export default {
       position: relative;
 
       .title {
-        font-size: 26px;
+        font-size: 20px;
         color: $dark_gray;
         margin: 0px auto 40px auto;
         text-align: center;
@@ -255,7 +255,7 @@ export default {
       }
 
       .bigtitle {
-        font-size: 42px;
+        font-size: 35px;
         color: $light_gray;
         margin: 0px auto 40px auto;
         text-align: center;
