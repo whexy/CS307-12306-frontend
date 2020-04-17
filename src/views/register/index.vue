@@ -1,10 +1,10 @@
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <el-form
       ref="loginForm"
       :model="RegisterForm"
       :rules="loginRules"
-      class="login-form"
+      class="register-form"
       auto-complete="on"
       label-position="left"
     >
@@ -189,13 +189,13 @@ export default {
   $cursor: #fff;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container .el-input input {
+    .register-container .el-input input {
       color: $cursor;
     }
   }
 
   /* reset element-ui css */
-  .login-container {
+  .register-container {
     .el-input {
       display: inline-block;
       height: 47px;
@@ -232,17 +232,17 @@ export default {
   $dark_gray: #889aa4;
   $light_gray: #eee;
 
-  .login-container {
+  .register-container {
     min-height: 100%;
     width: 100%;
     background-color: $bg;
     overflow: hidden;
 
-    .login-form {
+    .register-form {
       position: relative;
       width: 650px;
       max-width: 100%;
-      padding: 160px 35px 0;
+      padding: 80px 35px 80px;
       margin: 0 auto;
       overflow: hidden;
     }
@@ -251,7 +251,7 @@ export default {
       text-align: center;
       font-size: 14px;
       color: #fff;
-      margin: 0 auto;
+      margin: auto;
 
       /*span {*/
       /*  &:first-of-type {*/
