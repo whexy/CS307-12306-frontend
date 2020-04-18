@@ -57,18 +57,19 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '火车票查询', icon: 'dashboard' }
+      meta: { title: '12307火车订票系统', icon: 'dashboard' }
     }]
   },
 
   {
     path: '/station_query',
     component: Layout,
+    redirect: '/station_query',
     children: [{
       path: 'station_query',
       name: 'station_query',
       component: () => import('@/views/station_query/index'),
-      meta: { title: '火车站站点查询' }
+      meta: { title: '火车站站点查询', icon: 'train_station' }
     }]
   },
 
