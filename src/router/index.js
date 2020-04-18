@@ -62,6 +62,17 @@ export const constantRoutes = [
   },
 
   {
+    path: '/station_query',
+    component: Layout,
+    children: [{
+      path: 'station_query',
+      name: 'station_query',
+      component: () => import('@/views/station_query/index'),
+      meta: { title: '火车站站点查询' }
+    }]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
