@@ -45,6 +45,7 @@
 <script>
   import Ticket from '@/components/Ticket'
   import logoSrc from '@/assets/images/logo.png'
+  import { getTicketList } from '@/api/ticket'
 
   export default {
     name: 'Dashboard',
@@ -57,88 +58,7 @@
         ticket_style: 'margin: auto',
         display_style: true,
         logo_url: logoSrc,
-        tickets: [
-          {
-            trainName: 'G456',
-            checkEnter: 'A12',
-            seat: '01车01F座',
-            seatClass: '二等座',
-            departStation: '镇江',
-            departStationEnglish: 'Zhenjiang',
-            arrivalStation: '南京',
-            arrivalStationEnglish: 'Nanjing',
-            price: '￥29.5 镇江南站售',
-            time: '2020年4月18日 07:14',
-            name: '石文轩',
-            idCard: '3211011999****6317',
-            orderId: '123456789098765432101',
-            ticketId: 'Z123456789'
-          },
-          {
-            trainName: 'G456',
-            checkEnter: 'A12',
-            seat: '01车01F座',
-            seatClass: '二等座',
-            departStation: '镇江',
-            departStationEnglish: 'Zhenjiang',
-            arrivalStation: '南京',
-            arrivalStationEnglish: 'Nanjing',
-            price: '￥29.5 镇江南站售',
-            time: '2020年4月18日 07:14',
-            name: '石文轩',
-            idCard: '3211011999****6317',
-            orderId: '123456789098765432101',
-            ticketId: 'Z123456789'
-          },
-          {
-            trainName: 'G1',
-            checkEnter: 'A1',
-            seat: '01车01A座',
-            seatClass: '一等座',
-            departStation: '此岸',
-            departStationEnglish: 'Ci\'an',
-            arrivalStation: '彼岸',
-            arrivalStationEnglish: 'Bi\'an',
-            price: '￥1.5 南方火车站售',
-            time: '2020年4月18日 23:41',
-            name: '石文轩',
-            idCard: '3211011999****6317',
-            orderId: '123456789098765432101',
-            ticketId: 'Z123456789'
-          },
-          {
-            trainName: 'G1',
-            checkEnter: 'A1',
-            seat: '01车01A座',
-            seatClass: '一等座',
-            departStation: '此岸',
-            departStationEnglish: 'Ci\'an',
-            arrivalStation: '彼岸',
-            arrivalStationEnglish: 'Bi\'an',
-            price: '￥1.5 南方火车站售',
-            time: '2020年4月18日 23:41',
-            name: '石文轩',
-            idCard: '3211011999****6317',
-            orderId: '123456789098765432101',
-            ticketId: 'Z123456789'
-          },
-          {
-            trainName: 'G456',
-            checkEnter: 'A12',
-            seat: '01车01F座',
-            seatClass: '二等座',
-            departStation: '镇江',
-            departStationEnglish: 'Zhenjiang',
-            arrivalStation: '南京',
-            arrivalStationEnglish: 'Nanjing',
-            price: '￥29.5 镇江南站售',
-            time: '2020年4月18日 07:14',
-            name: '石文轩',
-            idCard: '3211011999****6317',
-            orderId: '123456789098765432101',
-            ticketId: 'Z123456789'
-          }
-        ]
+        tickets: []
       }
     },
     computed: {},
@@ -146,6 +66,17 @@
       this.clientWidth = `${document.documentElement.clientWidth}`
       window.onresize = function temp() {
         this.clientWidth = `${document.documentElement.clientWidth}`
+      }
+    },
+    created() {
+      this.getTickets()
+    },
+    methods: {
+      getTickets() {
+        getTicketList().then(response => {
+          const { ticket } = response
+          this.tickets = ticket
+        })
       }
     },
     watch: {
