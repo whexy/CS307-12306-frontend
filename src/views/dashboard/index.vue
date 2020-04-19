@@ -31,20 +31,7 @@
         <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="8" v-for="ticket in tickets" key="ticket"
                 style="margin: 25px auto">
           <ticket
-                  :trainName="ticket.trainName"
-                  :checkEnter="ticket.checkEnter"
-                  :seat="ticket.seat"
-                  :seatClass="ticket.seatClass"
-                  :departStation="ticket.departStation"
-                  :arrivalStation="ticket.arrivalStation"
-                  :departStationEnglish="ticket.departStationEnglish"
-                  :arrivalStationEnglish="ticket.arrivalStationEnglish"
-                  :price="ticket.price"
-                  :time="ticket.time"
-                  :name="ticket.name"
-                  :idCard="ticket.idCard"
-                  :orderId="ticket.orderId"
-                  :ticketId="ticket.ticketId"
+                  :train_info="ticket"
                   :displayStyle="display_style"
                   :style="ticket_style"
           />
@@ -165,6 +152,8 @@
       clientWidth: function() {
         if (this.clientWidth < 643) {
           this.ticket_style = 'transform: scale(' + (this.clientWidth / 643) + '); margin: -50px 0 -100px -100px'
+        } else {
+          this.ticket_style = 'margin: auto; transform:;'
         }
       }
     }
@@ -183,17 +172,6 @@
       font-size: 20px;
       height: 50px;
       margin: auto;
-    }
-
-    .verticalBar {
-      width: 2px;
-      height: 29px;
-      background: red;
-      display: inline-block;
-      margin-top: 31px;
-      vertical-align: top;
-      margin-right: 29px;
-      margin-left: 30px;
     }
 
     .ticket_card {

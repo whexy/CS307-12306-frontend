@@ -1,26 +1,26 @@
 <template>
   <div :class="style">
     <img src="@/assets/images/piao.png" v-if="!displayStyle">
-    <div class="train_name">{{ trainName }}</div>
+    <div class="train_name">{{ train_info.trainName }}</div>
     <div class="text_jpk">检票口：</div>
-    <div class="check_enter">{{ checkEnter }}</div>
+    <div class="check_enter">{{ train_info.checkEnter }}</div>
     <div class="white_place"/>
-    <div class="seat">{{ seat }}</div>
-    <div class="seat_class">{{ seatClass }}</div>
-    <div class="depart_station">{{ departStation }}</div>
-    <div class="arrival_station">{{ arrivalStation }}</div>
-    <div class="depart_station_english">{{ departStationEnglish }}</div>
-    <div class="arrival_station_english">{{ arrivalStationEnglish }}</div>
+    <div class="seat">{{ train_info.seat }}</div>
+    <div class="seat_class">{{ train_info.seatClass }}</div>
+    <div class="depart_station">{{ train_info.departStation }}</div>
+    <div class="arrival_station">{{ train_info.arrivalStation }}</div>
+    <div class="depart_station_english">{{ train_info.departStationEnglish }}</div>
+    <div class="arrival_station_english">{{ train_info.arrivalStationEnglish }}</div>
     <div class="pointer"><img src="@/assets/images/pointer.png"></div>
     <div class="qrcode"><img src="@/assets/images/qrcode.png"></div>
     <div class="text_wang">网</div>
-    <div class="price">{{ price }}</div>
-    <div class="time"> {{ time }}</div>
+    <div class="price">{{ train_info.price }}</div>
+    <div class="time"> {{ train_info.time }}</div>
     <div class="text_notice">（仅限当日当次车）</div>
-    <div class="name">{{ name }}</div>
-    <div class="idcard">{{ idCard }}</div>
-    <div class="order_id">{{ orderId }}</div>
-    <div class="ticket_id">{{ ticketId }}</div>
+    <div class="name">{{ train_info.name }}</div>
+    <div class="idcard">{{ train_info.idCard }}</div>
+    <div class="order_id">{{ train_info.orderId }}</div>
+    <div class="ticket_id">{{ train_info.ticketId }}</div>
   </div>
 </template>
 
@@ -28,61 +28,24 @@
   export default {
     name: 'Index',
     props: {
-      trainName: {
-        type: String,
-        default: 'D2281'
-      },
-      checkEnter: {
-        type: String,
-        default: 'A27'
-      },
-      seat: {
-        type: String,
-        default: '02车07F号'
-      },
-      seatClass: {
-        type: String,
-        default: '二等座'
-      },
-      departStation: {
-        type: String,
-        default: '镇江'
-      },
-      arrivalStation: {
-        type: String,
-        default: '深圳北'
-      },
-      departStationEnglish: {
-        type: String,
-        default: 'Zhenjiang'
-      },
-      arrivalStationEnglish: {
-        type: String,
-        default: 'Shenzhenbei'
-      },
-      price: {
-        type: String,
-        default: '￥1049.0元 镇江站售'
-      },
-      time: {
-        type: String,
-        default: '2018年10月06日 08:21'
-      },
-      name: {
-        type: String,
-        default: '石文轩'
-      },
-      idCard: {
-        type: String,
-        default: '3211021999****6317'
-      },
-      ticketId: {
-        type: String,
-        default: 'Z81R046252'
-      },
-      orderId: {
-        type: String,
-        default: '30407300811007R046252'
+      train_info: {
+        type: Object,
+        default: {
+          trainName: 'D2281',
+          checkEnter: 'A27',
+          seat: '02车07F号',
+          seatClass: '二等座',
+          departStation: '镇江',
+          arrivalStation: '深圳北',
+          departStationEnglish: 'Zhenjiang',
+          arrivalStationEnglish: 'Shenzhenbei',
+          price: '￥1049.0元 镇江站售',
+          time: '2018年10月06日 08:21',
+          name: '石文轩',
+          idCard: '3211021999****6317',
+          ticketId: 'Z81R046252',
+          orderId: '30407300811007R046252'
+        }
       },
       displayStyle: {
         type: Boolean,
@@ -91,15 +54,15 @@
     },
     data() {
       return {
-        style: "ticket_container_my"
+        style: 'ticket_container_my'
       }
     },
     watch: {
       displayStyle: function() {
         if (this.displayStyle) {
-          this.style = "ticket_container_my"
+          this.style = 'ticket_container_my'
         } else {
-          this.style = "ticket_container"
+          this.style = 'ticket_container'
         }
       }
     }
@@ -345,6 +308,7 @@
     }
 
   }
+
   .ticket_container {
     width: 583px;
     height: 356px;
