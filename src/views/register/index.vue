@@ -16,7 +16,7 @@
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon icon-class="user"/>
         </span>
         <el-input
           ref="username"
@@ -31,7 +31,7 @@
 
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon icon-class="password"/>
         </span>
         <el-input
           :key="passwordType"
@@ -44,13 +44,13 @@
           auto-complete="off"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
         </span>
       </el-form-item>
 
       <el-form-item prop="phone_number">
         <span class="svg-container">
-          <svg-icon icon-class="phone" />
+          <svg-icon icon-class="phone"/>
         </span>
         <el-input
           ref="phone_number"
@@ -65,7 +65,7 @@
 
       <el-form-item prop="email">
         <span class="svg-container">
-          <svg-icon icon-class="email" />
+          <svg-icon icon-class="email"/>
         </span>
         <el-input
           ref="email"
@@ -80,7 +80,7 @@
 
       <el-form-item prop="real_name">
         <span class="svg-container">
-          <svg-icon icon-class="real_name" />
+          <svg-icon icon-class="real_name"/>
         </span>
         <el-input
           ref="real_name"
@@ -111,75 +111,80 @@
 </template>
 
 <script>
-import { Register } from '@/utils/register'
-import { validUsername } from '@/utils/validate'
+  import { Register } from '@/utils/register'
+  import { validUsername } from '@/utils/validate'
 
-export default {
-  name: 'Login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      validUsername(value).then(value => {
-        if (value) {
-          callback()
+  export default {
+    name: 'Login',
+    data() {
+      const validateUsername = (rule, value, callback) => {
+        validUsername(value).then(value => {
+          if (value) {
+            callback()
+          } else {
+            callback(new Error('用户名已存在'))
+          }
+        }).catch(error => {
+          callback(new Error(error))
+        })
+      }
+      const validatePassword = (rule, value, callback) => {
+        const regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}')
+        if (!regex.test(value)) {
+          callback(new Error('密码中必须包含字母、数字，至少8个字符，最多30个字符。'))
         } else {
-          callback(new Error('用户名已存在'))
+          callback()
         }
-      }).catch(error => {
-        callback(new Error(error))
-      })
-    }
-    const validatePassword = (rule, value, callback) => {
-      const regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z]).{8,30}')
-      if (!regex.test(value)) {
-        callback(new Error('密码中必须包含字母、数字，至少8个字符，最多30个字符。'))
-      } else {
-        callback()
       }
-    }
-    return {
-      RegisterForm: {
-        username: '',
-        password: '',
-        phone_number: '',
-        email: '',
-        real_name: ''
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
-  },
-  watch: {
-    $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
+      return {
+        RegisterForm: {
+          username: '',
+          password: '',
+          phone_number: '',
+          email: '',
+          real_name: ''
+        },
+        loginRules: {
+          username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        },
+        loading: false,
+        passwordType: 'password',
+        redirect: undefined
       }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
     },
-    handleRegister() {
-      // Whexy： 所有页面的js逻辑不应复杂于页面元素加载和变动。所有复杂于元素加载的逻辑都应在其他地方完成。
-      Register(this.RegisterForm).then(() => {
-        this.$router.push({ path: this.redirect || '/login' })
-      })
+    watch: {
+      $route: {
+        handler: function(route) {
+          this.redirect = route.query && route.query.redirect
+        },
+        immediate: true
+      }
+    },
+    methods: {
+      showPwd() {
+        if (this.passwordType === 'password') {
+          this.passwordType = ''
+        } else {
+          this.passwordType = 'password'
+        }
+        this.$nextTick(() => {
+          this.$refs.password.focus()
+        })
+      },
+      handleRegister() {
+        // Whexy： 所有页面的js逻辑不应复杂于页面元素加载和变动。所有复杂于元素加载的逻辑都应在其他地方完成。
+        this.loading = true
+        Register(this.RegisterForm).then(() => {
+          this.$router.push({ path: this.redirect || '/login' })
+          this.loading = false
+        }).catch(error => {
+          new Error(error)
+          this.loading = false
+        })
+      }
     }
   }
-}
 
 </script>
 

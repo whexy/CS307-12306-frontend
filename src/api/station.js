@@ -7,3 +7,11 @@ export function geo(geo_name) {
     params: { geo_name }
   })
 }
+
+export function train(train_name) {
+  return request({
+    url: '/train',
+    method: 'get',
+    params: { train_name }
+  })
+}
