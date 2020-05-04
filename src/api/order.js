@@ -7,3 +7,11 @@ export function getOrderID(data) {
     data
   })
 }
+
+export function getPurchaseStatus(data) {
+  return request({
+    url: '/purchase',
+    method: 'post',
+    data
+  })
+}

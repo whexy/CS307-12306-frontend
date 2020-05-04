@@ -44,16 +44,23 @@
         </el-button>
       </el-row>
     </el-card>
+    <el-card v-if="active===3" style="width: 600px; margin: auto;">
+      <el-row class="train_info"><span>付款完成！</span></el-row>
+    </el-card>
     <el-dialog
       title="扫描二维码以付款"
       :visible.sync="qrCodeVisible"
       width="30%">
       <el-row type="flex" justify="center">
-        <vue-qr :text="'http://192.168.0.107:5000/purchase?id='+order_id" :size="200"></vue-qr>
+        <vue-qr :text="'http://localhost:5000/purchase?order_id='+order_id" :size="200"></vue-qr>
+      </el-row>
+      <el-row type="flex" justify="center">
+        <p><a :href="'http://localhost:5000/purchase?order_id='+order_id" target="_blank">使用手机扫码付款或点此链接付款</a>
+        </p>
       </el-row>
       <el-row type="flex" justify="center">
         <el-button type="danger" @click="qrCodeVisible = false">取消订票</el-button>
-        <el-button type="primary" @click="active++" :loading="!purchased">{{purchase_info}}</el-button>
+        <el-button type="primary" @click="purchasedEnd">{{purchase_info}}</el-button>
       </el-row>
     </el-dialog>
   </div>
@@ -61,8 +68,9 @@
 
 <script>
   import { left_ticket_query } from '@/utils/ticket'
-  import { newOrder } from '@/utils/order'
+  import { newOrder, getPurchase } from '@/utils/order'
   import vueQr from 'vue-qr'
+  import { Message } from 'element-ui'
 
   export default {
     name: 'order',
@@ -80,7 +88,7 @@
         order_id: 0,
         qrCodeVisible: false,
         purchased: false,
-        purchase_info: '请使用手机完成支付'
+        purchase_info: '完成支付后请按此按钮刷新'
       }
     },
     created() {
@@ -103,6 +111,19 @@
         this.seat_type_id = index.seat_type_id
         this.price = index.price
         this.active++
+      },
+      purchasedEnd() {
+        getPurchase({ order_id: this.order_id }).then(result => {
+          if (result === 'paid') {
+            this.purchase_info = '完成'
+            this.purchased = true
+            this.qrCodeVisible = false
+            this.active += 2
+          }
+          else {
+            Message("支付未完成！")
+          }
+        })
       },
       makeNewOrder() {
         newOrder({
