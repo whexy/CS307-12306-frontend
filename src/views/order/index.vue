@@ -59,7 +59,7 @@
         </p>
       </el-row>
       <el-row type="flex" justify="center">
-        <el-button type="danger" @click="qrCodeVisible = false">取消订票</el-button>
+        <el-button type="danger" @click="cancelPurchases">取消订票</el-button>
         <el-button type="primary" @click="purchasedEnd">{{purchase_info}}</el-button>
       </el-row>
     </el-dialog>
@@ -68,7 +68,7 @@
 
 <script>
   import { left_ticket_query } from '@/utils/ticket'
-  import { newOrder, getPurchase } from '@/utils/order'
+  import { newOrder, getPurchase, cancelOrder } from '@/utils/order'
   import vueQr from 'vue-qr'
   import { Message } from 'element-ui'
 
@@ -119,11 +119,16 @@
             this.purchased = true
             this.qrCodeVisible = false
             this.active += 2
-          }
-          else {
-            Message("支付未完成！")
+          } else {
+            Message('支付未完成！')
           }
         })
+      },
+      cancelPurchases() {
+        cancelOrder({ order_id: this.order_id }).then(result => {
+          Message('后端悄悄说:' + result)
+          this.qrCodeVisible = false
+        }).catch(err => error(err))
       },
       makeNewOrder() {
         newOrder({

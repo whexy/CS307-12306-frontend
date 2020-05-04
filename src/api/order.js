@@ -8,6 +8,14 @@ export function getOrderID(data) {
   })
 }
 
+export function deleteOrder(data) {
+  return request({
+    url: '/order',
+    method: 'delete',
+    data
+  })
+}
+
 export function getPurchaseStatus(data) {
   return request({
     url: '/purchase',
