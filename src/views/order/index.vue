@@ -54,9 +54,12 @@
       <el-row type="flex" justify="center">
         <vue-qr :text="'http://localhost:5000/purchase?order_id='+order_id" :size="200"></vue-qr>
       </el-row>
-      <el-row type="flex" justify="center">
-        <p><a :href="'http://localhost:5000/purchase?order_id='+order_id" target="_blank">使用手机扫码付款或点此链接付款</a>
-        </p>
+      <el-row type="flex" justify="center" style="margin: 10px auto">
+        <el-link
+          :href="'http://localhost:5000/purchase?order_id='+order_id"
+          target="_blank">
+          使用手机扫码付款或点此链接付款
+        </el-link>
       </el-row>
       <el-row type="flex" justify="center">
         <el-button type="danger" @click="cancelPurchases">取消订票</el-button>
@@ -92,11 +95,11 @@
       }
     },
     created() {
-      this.train_name = this.$route.query.train_name
-      this.first_interval = this.$route.query.first_interval
-      this.last_interval = this.$route.query.last_interval
-      this.dep_station = this.$route.query.dep_station
-      this.arv_station = this.$route.query.arv_station
+      this.train_name = this.$route.params.train_name
+      this.first_interval = this.$route.params.first_interval
+      this.last_interval = this.$route.params.last_interval
+      this.dep_station = this.$route.params.dep_station
+      this.arv_station = this.$route.params.arv_station
       this.query_left_ticket()
     },
     methods: {
@@ -126,9 +129,12 @@
       },
       cancelPurchases() {
         cancelOrder({ order_id: this.order_id }).then(result => {
-          Message('后端悄悄说:' + result)
+          Message(result)
           this.qrCodeVisible = false
-        }).catch(err => error(err))
+        }).catch(err => {
+          error(err)
+          this.qrCodeVisible = false
+        })
       },
       makeNewOrder() {
         newOrder({

@@ -27,9 +27,9 @@
                 :trigger-on-focus="false"
               ></el-autocomplete>
             </el-form-item>
-            <el-form-item label="出发日期">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>
-            </el-form-item>
+<!--            <el-form-item label="出发日期">-->
+<!--              <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>-->
+<!--            </el-form-item>-->
             <el-form-item label="其他选项">
               <el-checkbox v-model="form.DG_only">只看高铁/动车</el-checkbox>
             </el-form-item>
@@ -124,7 +124,7 @@
       },
       makeOrder(index) {
         this.$router.push({
-          path: '/order', query: {
+          name: 'order', params: {
             train_name: index.train_name,
             first_interval: index.first_interval,
             last_interval: index.last_interval,
