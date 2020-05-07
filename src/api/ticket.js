@@ -8,6 +8,22 @@ export function getTickets(token) {
   })
 }
 
+export function getFuzzyTickets(token) {
+  return request({
+    url: '/query/v4',
+    method: 'get',
+    params: token
+  })
+}
+
+export function getTransferStationList(token) {
+  return request({
+    url: 'query/transfer',
+    method: 'get',
+    params: token
+  })
+}
+
 export function getLeftTickets(token) {
   return request({
     url: '/query/ticket',

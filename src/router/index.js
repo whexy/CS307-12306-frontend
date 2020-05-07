@@ -62,6 +62,30 @@ export const constantRoutes = [
   },
 
   {
+    path: '/modifyUserInfo',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'ModifyUserInfo',
+      component: () => import('@/views/modifyUserInfo/index'),
+      meta: { title: '用户信息修改' }
+    }],
+    hidden: true
+  },
+
+  {
+    path: '/recommend',
+    component: Layout,
+    redirect: '/recommend',
+    children: [{
+      path: '',
+      name: 'Recommend',
+      component: () => import('@/views/recommend/index'),
+      meta: { title: '智能换乘推荐', icon: 'dashboard' }
+    }]
+  },
+
+  {
     path: '/order',
     component: Layout,
     children: [{

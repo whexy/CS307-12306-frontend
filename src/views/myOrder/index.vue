@@ -4,13 +4,13 @@
       <el-image style="width: 200px; height: 50px" :src="logo_url" fit="contain"/>
       <el-divider direction="vertical"></el-divider>
       <span>我的车票</span>
-      <el-divider direction="vertical"></el-divider>
-      <el-switch
-        style="display: block"
-        v-model="display_style"
-        active-color="#dbecfb"
-        inactive-color="#8fbcdb"
-      ></el-switch>
+<!--      <el-divider direction="vertical"></el-divider>-->
+<!--      <el-switch-->
+<!--        style="display: block"-->
+<!--        v-model="display_style"-->
+<!--        active-color="#dbecfb"-->
+<!--        inactive-color="#8fbcdb"-->
+<!--      ></el-switch>-->
     </div>
     <div>
 
@@ -28,15 +28,28 @@
         </el-table-column>
         <el-table-column label="订单状态">
           <template slot-scope="scope">
-            {{scope.row.orderStatus}}
+            <el-tag type="success" v-if="scope.row.orderStatus==='paid'" style="zoom: 1.4">已完成支付</el-tag>
+            <el-tag type="info" v-if="scope.row.orderStatus==='cancelled'" style="zoom: 1.4">已失效</el-tag>
+            <el-button
+              type="danger"
+              @click="cancelPurchase(scope.row.realOrderId)"
+              v-if="scope.row.orderStatus==='paid'"
+            >退票
+            </el-button>
+            <!--            {{scope.row.orderStatus}}-->
           </template>
         </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary">改签</el-button>
-            <el-button type="danger">退票</el-button>
-          </template>
-        </el-table-column>
+        <!--        <el-table-column label="操作">-->
+        <!--          <template slot-scope="scope">-->
+        <!--            &lt;!&ndash;            <el-button type="primary">改签</el-button>&ndash;&gt;-->
+        <!--            <el-button-->
+        <!--              type="danger"-->
+        <!--              @click="cancelPurchase(scope.row.realOrderId)"-->
+        <!--              :disabled="scope.row.orderStatus === 'cancelled'"-->
+        <!--            >退票-->
+        <!--            </el-button>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
       </el-table>
     </div>
 
@@ -58,6 +71,8 @@
   import Ticket from '@/components/Ticket'
   import logoSrc from '@/assets/images/logo.png'
   import { getMyTickets } from '@/api/myTicket'
+  import { cancelOrder } from '@/utils/order'
+  import { Message } from 'element-ui'
 
   export default {
     name: 'myOrder',
@@ -90,6 +105,14 @@
       showTickets(train_info) {
         this.select_train = train_info
         this.ticketShow = true
+      },
+      cancelPurchase(orderId) {
+        cancelOrder({ order_id: orderId }).then(result => {
+          Message(result)
+          this.getTickets()
+        }).catch(err => {
+          error(err)
+        })
       }
     },
     watch: {}

@@ -11,7 +11,7 @@
 
       <div class="title-container">
         <h2 class="bigtitle">12307火车订票系统</h2>
-        <h3 class="title">用户注册</h3>
+        <h3 class="title">用户信息修改</h3>
       </div>
 
       <el-form-item prop="username">
@@ -113,7 +113,7 @@
         type="warning"
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleRegister"
-      >Register
+      >修改个人信息
       </el-button>
 
       <div class="tips">
@@ -167,6 +167,9 @@
         passwordType: 'password',
         redirect: undefined
       }
+    },
+    created() {
+      this.username = this.$route.params.username
     },
     watch: {
       $route: {

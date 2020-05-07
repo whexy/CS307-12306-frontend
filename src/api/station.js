@@ -10,7 +10,7 @@ export function geo(geo_name) {
 
 export function train(train_name) {
   return request({
-    url: '/train',
+    url: '/train/v2',
     method: 'get',
     params: { train_name }
   })

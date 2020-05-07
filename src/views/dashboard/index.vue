@@ -3,7 +3,7 @@
     <div class="dashboard-text">
       <el-image style="width: 200px; height: 50px" :src="logo_url" fit="contain"/>
       <el-divider direction="vertical"></el-divider>
-      <span>车票查询</span>
+      <span>车票预定</span>
     </div>
     <el-row style="margin-top: 40px">
       <el-col :span="6">
@@ -27,12 +27,19 @@
                 :trigger-on-focus="false"
               ></el-autocomplete>
             </el-form-item>
-<!--            <el-form-item label="出发日期">-->
-<!--              <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>-->
-<!--            </el-form-item>-->
+            <!--            <el-form-item label="">-->
+            <!--              <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>-->
+            <!--            </el-form-item>-->
             <el-form-item label="其他选项">
               <el-checkbox v-model="form.DG_only">只看高铁/动车</el-checkbox>
             </el-form-item>
+<!--            <el-form-item>-->
+<!--              <el-switch-->
+<!--                v-model="form.fuzzy"-->
+<!--                active-text="智能搜索"-->
+<!--                inactive-text="站站搜索">-->
+<!--              </el-switch>-->
+<!--            </el-form-item>-->
             <el-form-item>
               <el-button type="primary" style="margin: auto" @click="TicketQuery">查询车票</el-button>
               <el-button @click="ResetForm">重置</el-button>
@@ -73,7 +80,7 @@
 
 <script>
   import logoSrc from '@/assets/images/logo.png'
-  import { ticket_query } from '@/utils/ticket'
+  import { ticket_query, fuzzy_ticket_query } from '@/utils/ticket'
   import { geo_query } from '@/utils/geo_station'
 
   export default {
@@ -87,7 +94,8 @@
           arv_station: '',
           date: '',
           DG_only: true,
-          student: false
+          student: false,
+          fuzzy: true
         },
         showResult: false,
         loading: true,
@@ -106,11 +114,19 @@
       TicketQuery() {
         this.showResult = true
         this.loading = true
-        ticket_query(this.form).then(result => {
-            this.trainList = result
-            this.loading = false
-          }
-        )
+        if (this.form.fuzzy === true) {
+          fuzzy_ticket_query(this.form).then(result => {
+              this.trainList = result
+              this.loading = false
+            }
+          )
+        } else {
+          ticket_query(this.form).then(result => {
+              this.trainList = result
+              this.loading = false
+            }
+          )
+        }
       },
       ResetForm() {
         this.showResult = false
