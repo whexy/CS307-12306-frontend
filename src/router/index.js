@@ -100,6 +100,18 @@ export const constantRoutes = [
   },
 
   {
+    path: '/order2',
+    component: Layout,
+    children: [{
+      path: '',
+      name: 'order2',
+      component: () => import('@/views/order2/index'),
+      meta: { title: '订票' }
+    }],
+    hidden: true
+  },
+
+  {
     path: '/myOrder',
     component: Layout,
     redirect: '/myOrder',

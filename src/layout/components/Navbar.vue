@@ -12,7 +12,7 @@
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/modifyUserInfo">`
+          <router-link to="/modifyUserInfo">
             <el-dropdown-item>
               修改个人信息
             </el-dropdown-item>

@@ -249,12 +249,17 @@
       },
       orderTicket() {
         this.$router.push({
-          name: 'order', params: {
+          name: 'order2', params: {
             train_name: this.order1.train_name,
             first_interval: this.order1.first_interval,
             last_interval: this.order1.last_interval,
             dep_station: this.order1.dep_station,
-            arv_station: this.order1.arv_station
+            arv_station: this.order1.arv_station,
+            train_name2: this.order2.train_name,
+            first_interval2: this.order2.first_interval,
+            last_interval2: this.order2.last_interval,
+            dep_station2: this.order2.dep_station,
+            arv_station2: this.order2.arv_station
           }
         })
       }
