@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
+import { Message } from 'element-ui'
 
 Vue.use(Router)
 
@@ -57,7 +59,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '12307火车订票系统', icon: 'dashboard' }
+      meta: { title: '12307火车订票系统', icon: 'order' }
     }]
   },
 
@@ -81,7 +83,7 @@ export const constantRoutes = [
       path: '',
       name: 'Recommend',
       component: () => import('@/views/recommend/index'),
-      meta: { title: '智能换乘推荐', icon: 'dashboard' }
+      meta: { title: '智能换乘推荐', icon: 'smart' }
     }]
   },
 
@@ -92,7 +94,7 @@ export const constantRoutes = [
       path: '',
       name: 'order',
       component: () => import('@/views/order/index'),
-      meta: { title: '订票', icon: 'train_station' }
+      meta: { title: '订票' }
     }],
     hidden: true
   },
@@ -105,7 +107,7 @@ export const constantRoutes = [
       path: 'index',
       name: 'myOrder',
       component: () => import('@/views/myOrder/index'),
-      meta: { title: '我的火车票', icon: 'train_station' }
+      meta: { title: '我的火车票', icon: 'ticket' }
     }]
   },
 
@@ -136,6 +138,50 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/admin',
+    component: Layout,
+    name: 'Admin',
+    meta: { title: '后台管理', icon: 'order' },
+    children: [
+      {
+        path: 'station',
+        name: 'AdminStation',
+        component: () => import('@/views/admin/station/index'),
+        meta: { title: '火车站管理', icon: 'order' }
+      },
+      {
+        path: 'train',
+        name: 'AdminTrain',
+        component: () => import('@/views/admin/train/index'),
+        meta: { title: '火车线路管理', icon: 'order' }
+      }
+    ]
+  },
+
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: 'noredirect',
+  //   redirect: '/example/table',
+  //   name: 'Example',
+  //   meta: { title: 'Example', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'table',
+  //       name: 'Table',
+  //       component: _import('table/index'),
+  //       meta: { title: 'Table', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'tree',
+  //       name: 'Tree',
+  //       component: _import('tree/index'),
+  //       meta: { title: 'Tree', icon: 'tree' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

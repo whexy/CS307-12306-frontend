@@ -144,8 +144,8 @@
             train_name: index.train_name,
             first_interval: index.first_interval,
             last_interval: index.last_interval,
-            dep_station: this.form.dep_station,
-            arv_station: this.form.arv_station
+            dep_station: index.dep_station,
+            arv_station: index.arv_station
           }
         })
       }

@@ -8,6 +8,14 @@ export function geo(geo_name) {
   })
 }
 
+export function area(area_info) {
+  return request({
+    url: '/area',
+    method: 'get',
+    params: area_info
+  })
+}
+
 export function train(train_name) {
   return request({
     url: '/train/v2',

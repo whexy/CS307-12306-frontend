@@ -21,10 +21,25 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
+    const hasGetUserInfo = store.getters.name
+    if (!hasGetUserInfo) {
+      await store.dispatch('user/getInfo')
+      console.log('Get name from server:' + store.getters.name)
+    }
+    console.log(to.path)
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
+    } else if (to.path.startsWith('/admin')) {
+      console.log(store.getters.name)
+      if (store.getters.name === 'whexy') {
+        next()
+      } else {
+        Message.error('用户权限不足')
+        next({ path: '/' })
+        NProgress.done()
+      }
     } else {
       next()
       // const hasGetUserInfo = store.getters.name

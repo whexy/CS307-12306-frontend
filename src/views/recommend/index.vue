@@ -1,9 +1,11 @@
 <template>
   <div class="dashboard">
-    <div class="dashboard-text">
-      <el-image style="width: 200px; height: 50px" :src="logo_url" fit="contain"/>
-      <el-divider direction="vertical"></el-divider>
-      <span>换乘查询</span>
+    <div class="dashboard-container">
+      <div class="dashboard-text">
+        <el-image style="width: 200px; height: 50px" :src="logo_url" fit="contain"/>
+        <el-divider direction="vertical"></el-divider>
+        <span>换乘查询</span>
+      </div>
     </div>
     <el-row style="margin-top: 10px">
       <el-col>
@@ -110,7 +112,7 @@
           </el-card>
         </el-row>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="12" v-if="showResult">
         <el-card shadow="hover">
           选择第一张火车票：
           <el-row class="train_info"><span>{{order1.train_name}}</span></el-row>
@@ -122,7 +124,7 @@
           <el-divider></el-divider>
           <el-row type="flex" justify="center">
             <el-badge :value="2" class="item" type="danger">
-              <el-button type="danger">预定火车票</el-button>
+              <el-button type="danger" @click="orderTicket">预定火车票</el-button>
             </el-badge>
           </el-row>
         </el-card>
@@ -162,12 +164,16 @@
         order1: {
           dep_station: ' ',
           arv_station: ' ',
-          train_name: ' '
+          train_name: ' ',
+          first_interval: '',
+          last_interval: ''
         },
         order2: {
           dep_station: ' ',
           arv_station: ' ',
-          train_name: ' '
+          train_name: ' ',
+          first_interval: '',
+          last_interval: ''
         }
       }
     },
@@ -231,20 +237,24 @@
         this.order1.dep_station = row.dep_station
         this.order1.arv_station = row.arv_station
         this.order1.train_name = row.train_name
+        this.order1.first_interval = row.first_interval
+        this.order1.last_interval = row.last_interval
       },
       handleCurrentChange2(row) {
         this.order2.dep_station = row.dep_station
         this.order2.arv_station = row.arv_station
         this.order2.train_name = row.train_name
+        this.order2.first_interval = row.first_interval
+        this.order2.last_interval = row.last_interval
       },
-      makeOrder(index) {
+      orderTicket() {
         this.$router.push({
           name: 'order', params: {
-            train_name: index.train_name,
-            first_interval: index.first_interval,
-            last_interval: index.last_interval,
-            dep_station: this.form.dep_station,
-            arv_station: this.form.arv_station
+            train_name: this.order1.train_name,
+            first_interval: this.order1.first_interval,
+            last_interval: this.order1.last_interval,
+            dep_station: this.order1.dep_station,
+            arv_station: this.order1.arv_station
           }
         })
       }
