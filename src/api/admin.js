@@ -35,7 +35,31 @@ export function GetIntervalInfo(form) {
 export function CommitIntervalInfo(data) {
   return request({
     url: '/admin/train',
+    method: 'patch',
+    data
+  })
+}
+
+export function NewInterval(data) {
+  return request({
+    url: '/admin/train',
     method: 'post',
+    data
+  })
+}
+
+export function DeleteTrain(data) {
+  return request({
+    url: '/admin/train',
+    method: 'delete',
+    data
+  })
+}
+
+export function RestoreTrain(data) {
+  return request({
+    url: '/admin/train',
+    method: 'put',
     data
   })
 }

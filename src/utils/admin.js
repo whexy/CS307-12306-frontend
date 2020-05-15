@@ -1,4 +1,11 @@
-import { AddNewStation, CommitIntervalInfo, DeleteNewStation, GetIntervalInfo, ModifyStation } from '@/api/admin'
+import {
+  AddNewStation,
+  CommitIntervalInfo,
+  DeleteNewStation, DeleteTrain,
+  GetIntervalInfo,
+  ModifyStation,
+  NewInterval, RestoreTrain
+} from '@/api/admin'
 
 export function addNewStation(form) {
   return new Promise((resolve, reject) => {
@@ -39,6 +46,33 @@ export function getIntervalInfo(form) {
 export function commitIntervalInfo(data) {
   return new Promise((resolve, reject) => {
     CommitIntervalInfo(data).then(response => {
+      const { result } = response
+      resolve(result)
+    }).catch(error => reject(error))
+  })
+}
+
+export function commitNewInterval(data) {
+  return new Promise((resolve, reject) => {
+    NewInterval(data).then(response => {
+      const { result } = response
+      resolve(result)
+    }).catch(error => reject(error))
+  })
+}
+
+export function deleteTrain(data) {
+  return new Promise((resolve, reject) => {
+    DeleteTrain(data).then(response => {
+      const { result } = response
+      resolve(result)
+    }).catch(error => reject(error))
+  })
+}
+
+export function restoreTrain(data) {
+  return new Promise((resolve, reject) => {
+    RestoreTrain(data).then(response => {
       const { result } = response
       resolve(result)
     }).catch(error => reject(error))

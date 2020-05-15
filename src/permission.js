@@ -32,8 +32,10 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else if (to.path.startsWith('/admin')) {
+      await store.dispatch('user/getInfo')
       console.log(store.getters.name)
-      if (store.getters.name === 'whexy') {
+      console.log(store.getters.admin)
+      if (store.getters.admin === true) {
         next()
       } else {
         Message.error('用户权限不足')

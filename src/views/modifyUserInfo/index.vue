@@ -38,7 +38,7 @@
           ref="password"
           v-model="RegisterForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入新密码，不改动请留空"
           name="password"
           tabindex="2"
           auto-complete="off"
@@ -93,21 +93,6 @@
         />
       </el-form-item>
 
-      <el-form-item prop="id_card">
-        <span class="svg-container">
-          <svg-icon icon-class="real_name"/>
-        </span>
-        <el-input
-          ref="id_card"
-          v-model="RegisterForm.id_card"
-          placeholder="ID Card"
-          name="id_card"
-          type="text"
-          tabindex="6"
-          auto-complete="off"
-        />
-      </el-form-item>
-
       <el-button
         :loading="loading"
         type="warning"
@@ -128,6 +113,7 @@
 <script>
   import { Register } from '@/utils/register'
   import { validUsername } from '@/utils/validate'
+  import { getInfo, modifyUserInfo } from '@/api/user'
 
   export default {
     name: 'Login',
@@ -169,17 +155,21 @@
       }
     },
     created() {
-      this.username = this.$route.params.username
-    },
-    watch: {
-      $route: {
-        handler: function(route) {
-          this.redirect = route.query && route.query.redirect
-        },
-        immediate: true
-      }
+      this.getUserInfo()
     },
     methods: {
+      getUserInfo() {
+        new Promise((resolve, reject) => {
+            getInfo().then(response => {
+              const { result } = response
+              resolve(result)
+            }).catch(err => reject(err))
+          }
+        ).then(result => {
+          this.RegisterForm = result
+          console.log(this.RegisterForm)
+        })
+      },
       showPwd() {
         if (this.passwordType === 'password') {
           this.passwordType = ''
@@ -191,10 +181,19 @@
         })
       },
       handleRegister() {
-        // Whexy： 所有页面的js逻辑不应复杂于页面元素加载和变动。所有复杂于元素加载的逻辑都应在其他地方完成。
         this.loading = true
-        Register(this.RegisterForm).then(() => {
-          this.$router.push({ path: this.redirect || '/login' })
+        new Promise((resolve, reject) => {
+          modifyUserInfo(this.RegisterForm).then(response => {
+            const { result } = response
+            resolve(result)
+          }).catch(err => {
+            reject(err)
+          })
+        }).then((result) => {
+          this.$notify.success({
+            title: '成功',
+            message: result
+          })
           this.loading = false
         }).catch(error => {
           new Error(error)

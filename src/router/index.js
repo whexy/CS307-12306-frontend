@@ -168,6 +168,12 @@ export const constantRoutes = [
         name: 'AdminTrain',
         component: () => import('@/views/admin/train/index'),
         meta: { title: '火车线路管理', icon: 'order' }
+      },
+      {
+        path: 'new_train',
+        name: 'CreateTrain',
+        component: () => import('@/views/admin/new_train/index'),
+        meta: { title: '新增火车车次', icon: 'order' }
       }
     ]
   },

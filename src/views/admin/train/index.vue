@@ -9,6 +9,8 @@
             </el-col>
             <el-col :xs="24" :md="12" :span="4">
               <el-button @click="queryTrain">提交</el-button>
+              <el-button @click="handleDeleteTrain" type="danger" v-if="available">停用火车线路</el-button>
+              <el-button @click="handleRestoreTrain" type="primary" v-if="restorable">恢复火车线路</el-button>
             </el-col>
           </el-row>
           <el-table :data="intervalList" :fit="true" :show-header="true" stripe>
@@ -81,7 +83,7 @@
 
 <script>
   import { geo_query, train_query } from '@/utils/geo_station'
-  import { commitIntervalInfo, getIntervalInfo } from '@/utils/admin'
+  import { commitIntervalInfo, deleteTrain, getIntervalInfo, restoreTrain } from '@/utils/admin'
 
   export default {
     name: 'AdminTrain',
@@ -106,13 +108,17 @@
             seat_type_7: ''
           }
         },
-        dialogFormVisible: false
+        dialogFormVisible: false,
+        available: false,
+        restorable: false
       }
     },
     methods: {
       queryTrain() {
         getIntervalInfo({ train_name: this.train_name }).then(result => {
-          this.intervalList = result
+          this.available = result.available
+          this.restorable = !this.available
+          this.intervalList = result.line
         })
       },
       handleModify(interval) {
@@ -135,6 +141,35 @@
             message: err
           })
           this.dialogFormVisible = false
+          this.queryTrain()
+        })
+      },
+      handleDeleteTrain() {
+        deleteTrain({ train_name: this.train_name }).then(result => {
+          this.$notify.success({
+            title: '成功',
+            message: result
+          })
+          this.queryTrain()
+        }).catch(err => {
+          this.$notify.error({
+            title: '失败',
+            message: err
+          })
+        })
+      },
+      handleRestoreTrain() {
+        restoreTrain({ train_name: this.train_name }).then(result => {
+          this.$notify.success({
+            title: '成功',
+            message: result
+          })
+          this.queryTrain()
+        }).catch(err => {
+          this.$notify.error({
+            title: '失败',
+            message: err
+          })
         })
       }
     }

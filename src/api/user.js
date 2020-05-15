@@ -23,6 +23,14 @@ export function register(data) {
   })
 }
 
+export function modifyUserInfo(data) {
+  return request({
+    url: 'user',
+    method: 'patch',
+    data
+  })
+}
+
 export function username_available(username) {
   return request({
     url: '/user/check',
