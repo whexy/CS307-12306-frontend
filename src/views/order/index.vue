@@ -52,11 +52,11 @@
       :visible.sync="qrCodeVisible"
       width="30%">
       <el-row type="flex" justify="center">
-        <vue-qr :text="'http://localhost:5000/purchase?order_id='+order_id" :size="200"></vue-qr>
+        <vue-qr :text="'http://121.36.40.215:12307/purchase?order_id='+order_id" :size="200"></vue-qr>
       </el-row>
       <el-row type="flex" justify="center" style="margin: 10px auto">
         <el-link
-          :href="'http://localhost:5000/purchase?order_id='+order_id"
+          :href="'http://121.36.40.215:12307/purchase?order_id='+order_id"
           target="_blank">
           使用手机扫码付款或点此链接付款
         </el-link>

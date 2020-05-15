@@ -1,91 +1,33 @@
-# vue-admin-template
+# CS307-12306 前端仓库
 
-English | [简体中文](./README-zh.md)
+这是CS307-12306（简称12307）的前端仓库。基于VUE.JS，设计框架为elementUI。
 
-> A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
-
-**Live demo:** http://panjiachen.github.io/vue-admin-template
+项目仓促，前端代码并不优雅。
 
 
-**The current version is `v4.0+` build on `vue-cli`. If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0), it does not rely on `vue-cli`**
 
-## Build Setup
+![image.png](https://i.loli.net/2020/05/15/URTrM4HPNla2f93.png)
 
 
-```bash
-# clone the project
-git clone https://github.com/PanJiaChen/vue-admin-template.git
 
-# enter the project directory
-cd vue-admin-template
 
-# install dependency
-npm install
+## 视觉设计
 
-# develop
-npm run dev
-```
+这是一个火车票订票系统，最重要的部分就是火车票。用户在查看自己的火车票时，我希望能**直观的**、**有区分的**展示相关的信息。
 
-This will automatically open http://localhost:9528
+![CleanShot 2020-05-15 at 22.49.44.jpeg](https://i.loli.net/2020/05/15/RIeqSx4ghBMG1jF.jpg)
 
-## Build
+设计之初，我打算直接在订单界面展示实体火车票。火车票的设计和elementUI不是很协调，我使用CSS构建了一套和elementUI设计语言相似的「平面车票」。用户在打开订票页面的时候，第一眼就能对自己的票务信息有很直观的了解。
 
-```bash
-# build for test environment
-npm run build:stage
 
-# build for production environment
-npm run build:prod
-```
 
-## Advanced
+## 简洁表达
 
-```bash
-# preview the release environment effect
-npm run preview
+订票后台操作纷繁复杂，但是在前端我希望能尽可能保持简单。所有非必要的点选都被删除了。
 
-# preview the release environment effect + static resource analysis
-npm run preview -- --report
+![image.png](https://i.loli.net/2020/05/15/dKOJg3y5ArzZqS2.png)
 
-# code format check
-npm run lint
+对于有中转站的情况，也要保持页面的基本要素相同。
 
-# code format check and auto fix
-npm run lint -- --fix
-```
+![image.png](https://i.loli.net/2020/05/15/JHRFgxWYEh7otIp.png)
 
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
-
-## Demo
-
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
-
-## Extra
-
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
-
-For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
-
-## Related Project
-
-- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-
-- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
-
-- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
-
-## Browsers support
-
-Modern browsers and Internet Explorer 10+.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
-
-## License
-
-[MIT](https://github.com/PanJiaChen/vue-admin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
