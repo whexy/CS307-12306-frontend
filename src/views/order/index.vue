@@ -40,6 +40,7 @@
       <el-row type="flex" justify="center">
         <el-button
           type="primary"
+          :loading="orderLoading"
           @click="makeNewOrder"> 立即预定
         </el-button>
       </el-row>
@@ -50,6 +51,9 @@
     <el-dialog
       title="扫描二维码以付款"
       :visible.sync="qrCodeVisible"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
       width="30%">
       <el-row type="flex" justify="center">
         <vue-qr :text="'http://121.36.40.215:12307/purchase?order_id='+order_id" :size="200"></vue-qr>
@@ -91,7 +95,8 @@
         order_id: 0,
         qrCodeVisible: false,
         purchased: false,
-        purchase_info: '完成支付后请按此按钮刷新'
+        purchase_info: '完成支付后请按此按钮刷新',
+        orderLoading: false
       }
     },
     created() {
@@ -122,6 +127,7 @@
             this.purchased = true
             this.qrCodeVisible = false
             this.active += 2
+            this.orderLoading = false
           } else {
             Message('支付未完成！')
           }
@@ -131,12 +137,14 @@
         cancelOrder({ order_id: this.order_id }).then(result => {
           Message(result)
           this.qrCodeVisible = false
+          this.orderLoading = false
         }).catch(err => {
           error(err)
           this.qrCodeVisible = false
         })
       },
       makeNewOrder() {
+        this.orderLoading = true
         newOrder({
           train_name: this.train_name,
           first_interval: this.first_interval,
